@@ -15,20 +15,21 @@ mysql-server-ppa:
 
     cmd.run:
         #- name: apt-key adv --keyserver pgp.mit.edu --recv-keys 5072E1F5 
-        - name: sudo apt-key adv --keyserver pgp.mit.edu --recv-keys A4A9406876FCBD3C456770C88C718D3B5072E1F5        
-        - unless:
-            - apt-key list | grep 5072E1F5
+        #- name: sudo apt-key adv --keyserver pgp.mit.edu --recv-keys A4A9406876FCBD3C456770C88C718D3B5072E1F5        
+        - name: sudo add-apt-repository ppa:ondrej/mysql-5.7 && sudo apt-get update
+        #- unless:
+         #   - apt-key list | grep 5072E1F5
 
     # alternative: untested official MySQL repository
-    pkgrepo.managed:
-        - humanname: Python 2.7 Updates
-        - name: deb http://repo.mysql.com/apt/ubuntu/ trusty mysql-5.7
-        - file: /etc/apt/sources.list.d/mysql.list
-        - dist: trusty
-        - require:
-            - cmd: mysql-server-ppa
-        - unless:
-            - test -e /etc/apt/sources.list.d/mysql.list
+   # pkgrepo.managed:
+    #    - humanname: Python 2.7 Updates
+#        - name: deb http://repo.mysql.com/apt/ubuntu/ trusty mysql-5.7
+#        - file: /etc/apt/sources.list.d/mysql.list
+#        - dist: trusty
+#        - require:
+#            - cmd: mysql-server-ppa
+#        - unless:
+#            - test -e /etc/apt/sources.list.d/mysql.list
 
 mysql-server:
     pkg.installed:
